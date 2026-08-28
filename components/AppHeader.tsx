@@ -1,0 +1,3 @@
+'use client';
+import { Boxes, Database, Map, PackageSearch } from 'lucide-react';import { usePathname } from 'next/navigation';import Link from 'next/link';
+export default function AppHeader(){const path=usePathname();const links=[['/','Inventory',PackageSearch],['/locations','Locations',Map],['/data','Data',Database]] as const;return <header className="topbar"><Link className="brand" href="/"><span className="brand-mark"><Boxes size={22}/></span><span>Smart Storage</span></Link><nav aria-label="Primary navigation">{links.map(([href,label,Icon])=><Link key={href} className={path===href?'active':''} href={href}><Icon size={15}/><span>{label}</span></Link>)}</nav></header>}

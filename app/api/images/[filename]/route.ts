@@ -1,0 +1,3 @@
+import { NextResponse } from 'next/server';import fs from 'node:fs';import path from 'node:path';import { uploadsDir } from '@/lib/db';
+export const runtime='nodejs';
+export async function GET(_:Request,{params}:{params:Promise<{filename:string}>}){const {filename}=await params;const safe=path.basename(filename),file=path.join(uploadsDir,safe);if(!fs.existsSync(file))return NextResponse.json({error:'Image not found.'},{status:404});const ext=path.extname(safe).slice(1);const type=ext==='jpg'?'image/jpeg':`image/${ext}`;return new NextResponse(fs.readFileSync(file),{headers:{'Content-Type':type,'Cache-Control':'public, max-age=3600'}});}
